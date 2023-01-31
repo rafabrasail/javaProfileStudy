@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.userrole.myapp.model.entity.Privilege;
 import com.userrole.myapp.model.entity.Role;
@@ -18,6 +20,11 @@ import com.userrole.myapp.model.repository.UserRepository;
 
 @SpringBootApplication
 public class MyappApplication {
+
+	// @Bean
+	// public PasswordEncoder passwordEncoder() {
+	// 	return new BCryptPasswordEncoder();
+	// }
 
 	@Bean
 	public CommandLineRunner run(@Autowired UserRepository userRepository, 
@@ -56,13 +63,13 @@ public class MyappApplication {
 
 			User user1 = new User();
 			user1.setUsername("rsanto");
-			user1.setPassword("rafa@pass");
+			user1.setPassword(("rafa@pass"));
 			user1.setRoles(Arrays.asList(role1));
 			userRepository.save(user1);
 
 			User user2 = new User();
 			user2.setUsername("zeca");
-			user2.setPassword("zeca@pass");
+			user2.setPassword(("zeca@pass"));
 			user2.setRoles(Arrays.asList(role3));
 			userRepository.save(user2);
 		};
