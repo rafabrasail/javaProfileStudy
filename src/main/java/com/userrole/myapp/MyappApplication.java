@@ -8,8 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.userrole.myapp.model.entity.Privilege;
 import com.userrole.myapp.model.entity.Role;
@@ -20,11 +18,6 @@ import com.userrole.myapp.model.repository.UserRepository;
 
 @SpringBootApplication
 public class MyappApplication {
-
-	// @Bean
-	// public PasswordEncoder passwordEncoder() {
-	// 	return new BCryptPasswordEncoder();
-	// }
 
 	@Bean
 	public CommandLineRunner run(@Autowired UserRepository userRepository, 
@@ -48,14 +41,14 @@ public class MyappApplication {
 			roleRepository.save(role1);
 
 			Role role2 = new Role();
-			role2.setRoleName("rep_his");
+			role2.setRoleName("role_2Acess");
 			role2.setRoleDescription("less access");
 			List<Privilege> repHisPrivilege = Arrays.asList(privilegeHistory, privilegeReports);
 			role2.setPrivileges(repHisPrivilege);
 			roleRepository.save(role2);
 
 			Role role3 = new Role();
-			role3.setRoleName("rep_his");
+			role3.setRoleName("role_1Acess");
 			role3.setRoleDescription("restrict access");
 			List<Privilege> techPrivilege = Arrays.asList(privilegeTech);
 			role3.setPrivileges(techPrivilege);

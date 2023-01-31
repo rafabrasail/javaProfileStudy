@@ -28,12 +28,6 @@ public class ServerSecurityConfig extends WebSecurityConfigurerAdapter {
 
         auth.userDetailsService(userService)
             .passwordEncoder(passwordEncoder());
-
-        //Sem puxar do banco de dados o User da aplicação
-        // auth.inMemoryAuthentication()
-        //     .withUser("Larissa")
-        //     .password("lari@pass")
-        //     .roles("admin");
     }
 
     @Bean

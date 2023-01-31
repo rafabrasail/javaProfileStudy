@@ -3,6 +3,7 @@ package com.userrole.myapp.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,5 +59,30 @@ public class UserController {
     @PostMapping({"/register"})
     public void registerNewUser(@RequestBody User user, @RequestParam Integer roleId){
         userService.registerNewUser(user, roleId);
+    }
+
+    //teste de acesso por role
+    @GetMapping({"/forAdmin"})
+    @PreAuthorize("hasAuthority('admin')")
+    public String forAdmin(){
+        return "This URL is only accessible to the admin";
+    }
+
+    @GetMapping({ "/for1Acess" })
+    @PreAuthorize("hasAuthority('TechPubs')")
+    public String for1Acess() {
+        return "This URL is only accessible to role with TechPubs Authority";
+    }
+
+    @GetMapping({ "/for2Acess" })
+    @PreAuthorize("hasAuthority('history', 'reports')")
+    public String for2Acess() {
+        return "This URL is only accessible to role with history and reports  Authority";
+    }
+
+    @GetMapping({ "/for3Acess" })
+    @PreAuthorize("hasAuthority('TechPubs','history', 'reports')")
+    public String for3Acess() {
+        return "This URL is only accessible to role with TechPubs, history and reports Authority";
     }
 }

@@ -76,12 +76,9 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado"));
 
-        // return org.springframework.security.core.userdetails.User.builder()
-        //                                                          .username(user.getUsername())
-        //                                                          .password(user.getPassword())
-        //                                                          .getAuthorities(user.getRoles())
-        //                                                          .build();
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(
+            user.getUsername(), user.getPassword(), getAuthorities(user.getRoles())
+            );
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles){
@@ -109,10 +106,5 @@ public class UserService implements UserDetailsService {
         }
         return authorities;
     }
-
-    // @Bean
-    // public PasswordEncoder passwordEncoder() {
-    //     return new BCryptPasswordEncoder();
-    // }
-
+    
 }
