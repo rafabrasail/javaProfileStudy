@@ -1,20 +1,20 @@
 package com.userrole.myapp.service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.userrole.myapp.model.entity.Privilege;
 import com.userrole.myapp.model.entity.Role;
 import com.userrole.myapp.model.entity.User;
 import com.userrole.myapp.model.repository.RoleRepository;
@@ -76,11 +76,38 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Usuario nao encontrado"));
 
-        return org.springframework.security.core.userdetails.User.builder()
-                                                                 .username(user.getUsername())
-                                                                 .password(user.getPassword())
-                                                                 .roles()
-                                                                 .build();
+        // return org.springframework.security.core.userdetails.User.builder()
+        //                                                          .username(user.getUsername())
+        //                                                          .password(user.getPassword())
+        //                                                          .getAuthorities(user.getRoles())
+        //                                                          .build();
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthorities(user.getRoles()));
+    }
+
+    private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles){
+        return getGrantedAuthorities(getPrivileges(roles));
+    }
+
+    private List<String> getPrivileges(Collection<Role> roles){
+        List<String> privileges = new ArrayList<>();
+        List<Privilege> collection = new ArrayList<>();
+        
+        for(Role role : roles){
+            privileges.add(role.getRoleName());
+            collection.addAll(role.getPrivileges());
+        }
+        for (Privilege item : collection){
+            privileges.add(item.getName());
+        }
+        return privileges;
+    }
+
+    private List<GrantedAuthority> getGrantedAuthorities(List<String> privileges){
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        for(String privilege : privileges) {
+            authorities.add(new SimpleGrantedAuthority(privilege));
+        }
+        return authorities;
     }
 
     // @Bean
