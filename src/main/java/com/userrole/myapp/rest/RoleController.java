@@ -33,7 +33,7 @@ public class RoleController {
     }
 
     //Get all roles
-    @GetMapping("/all")
+    @GetMapping
     public Collection<Role> acharTodasRoles(){
         return roleRepository.findAll();  
     }
@@ -55,7 +55,7 @@ public class RoleController {
     }
 
     //Create new role with privilege
-    @PostMapping("/new")
+    @PostMapping
     public void createNewRole(@RequestBody Role roleBody, @RequestParam List<Integer> ids){
         roleService.createRole(roleBody, ids);
     }

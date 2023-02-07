@@ -30,7 +30,7 @@ public class PrivilegeController {
     }
 
     //Get all privileges
-    @GetMapping("/all")
+    @GetMapping
     public List<Privilege> findAll(){
         return privilegeRepository.findAll();
     }
@@ -47,7 +47,7 @@ public class PrivilegeController {
         privilegeService.deletePrivilege(id);
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public Privilege salvar(@RequestBody Privilege privilege){
         return privilegeRepository.save(privilege);
     }

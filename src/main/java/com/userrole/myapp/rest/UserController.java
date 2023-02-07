@@ -32,7 +32,7 @@ public class UserController {
     private UserService userService;
 
     //List all users
-    @GetMapping("/all")
+    @GetMapping
     public List<User> finaAll(){
         return userRepository.findAll();
     }
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     //Criar nova role
-    @PostMapping({"/register"})
+    @PostMapping
     public void registerNewUser(@RequestBody User user, @RequestParam Integer roleId){
         userService.registerNewUser(user, roleId);
     }
