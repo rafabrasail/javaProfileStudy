@@ -3,6 +3,7 @@ package com.userrole.myapp.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.userrole.myapp.model.entity.User;
 import com.userrole.myapp.model.repository.UserRepository;
@@ -39,8 +41,9 @@ public class UserController {
 
     //find User by Id
     @GetMapping("{id}")
-    public void userById(@PathVariable Integer id){
-        userRepository.findById(id);
+    public User userById(@PathVariable Integer id){
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Privilege dont found"));
     }
 
     //Delete user

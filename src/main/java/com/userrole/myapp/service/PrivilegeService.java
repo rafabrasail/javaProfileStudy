@@ -24,11 +24,6 @@ public class PrivilegeService {
         return privilegeRepository.findAll();
     }
 
-    // Find privilege by id
-    public Privilege findById(Integer id) {
-        return privilegeRepository.findById(id).get();
-    }
-
     // Create new privilege
     public Privilege createNewPrivilege(Privilege role) {
         return privilegeRepository.save(role);

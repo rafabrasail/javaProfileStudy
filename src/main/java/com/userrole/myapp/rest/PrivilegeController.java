@@ -37,8 +37,10 @@ public class PrivilegeController {
 
     //Get privileges by id
     @GetMapping("{id}")
-    public void findById(@PathVariable Integer id){
-        privilegeService.findById(id);
+    public Privilege findById(@PathVariable Integer id){
+        return privilegeRepository.findById(id).orElseThrow(() -> 
+            new ResponseStatusException(HttpStatus.NOT_FOUND ,"Privilege dont found")
+        );
     }
 
     //Delete new privilege

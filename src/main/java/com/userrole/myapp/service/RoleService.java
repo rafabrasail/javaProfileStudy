@@ -3,7 +3,9 @@ package com.userrole.myapp.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.userrole.myapp.model.entity.Privilege;
 import com.userrole.myapp.model.entity.Role;
@@ -29,10 +31,6 @@ public class RoleService {
     return roleRepository.findAll();
   }
 
-  //Finda by id
-  public Role findById(Integer id){
-    return roleRepository.findById(id).get();
-  }
 
   //change privilege on the role
   public void createRole(Role roleBody, List<Integer> ids){

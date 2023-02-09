@@ -40,8 +40,9 @@ public class RoleController {
 
     //Get Role by Id
     @GetMapping("{id}")
-    public void acharRolePorId(@PathVariable Integer id){
-        roleRepository.findById(id);
+    public Role acharRolePorId(@PathVariable Integer id){
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Privilege dont found"));
     }
 
     //PUT Role only name and description
